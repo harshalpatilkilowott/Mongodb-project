@@ -69,7 +69,7 @@ export const createUser = async (req: Request, res: Response) => {
                     return res.status(httpCodes.INTERNAL_SERVER_ERROR).json({
                         ErrorModel : {
                             errorCode: httpCodes.INTERNAL_SERVER_ERROR,
-                            errorMessage: "User not created "
+                            errorMessage: "User not created"
                             }
                     });
                 }
