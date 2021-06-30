@@ -10,7 +10,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
             const checkIfUserExists = await User.find({_id:id});
 
-            if (checkIfUserExists){
+            if (checkIfUserExists[0]){
 
                 const deleteUser = await User.deleteOne({_id:id});
                 if (deleteUser){

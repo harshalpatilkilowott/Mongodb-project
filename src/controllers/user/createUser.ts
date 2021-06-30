@@ -49,7 +49,6 @@ export const createUser = async (req: Request, res: Response) => {
 
             const checkIfEmailAlreadyExists = await User.findOne({ email: email });
 
-
             if (!checkIfEmailAlreadyExists){
 
                 let hashPassword = await bcrypt.hash(password,10);
