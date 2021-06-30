@@ -6,6 +6,7 @@ import * as sample from "../controllers/sample";
 import * as createUserController from '../controllers/user/createUser';
 import * as userDetailsController from '../controllers/user/userDetails';
 import * as updateUserController from '../controllers/user/updateUser';
+import * as deleteUserController from '../controllers/user/deleteUser';
 
 const router: Router = Router();
 
@@ -15,5 +16,6 @@ router.get('/sample', sample.getApi);
 router.post('/user/create',createUserController.createUser);
 router.get('/user/:id',userDetailsController.userDetails);
 router.patch('/user/:id',updateUserController.updateUser);
+router.delete('/user/:id',deleteUserController.deleteUser);
 
 export default router;
