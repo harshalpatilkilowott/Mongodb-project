@@ -54,7 +54,7 @@ export const updateUser = async (req: Request, res: Response) => {
                     return res.status(httpCodes.NOT_FOUND).json({
                         ErrorModel : {
                             errorCode: httpCodes.NOT_FOUND,
-                            errorMessage: "User does not exists"
+                            errorMessage: "User not found"
                             }
                     });
                 }

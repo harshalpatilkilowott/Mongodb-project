@@ -10,7 +10,7 @@ export const userDetails = async (req: Request, res: Response) => {
             console.log(id)
             const checkIfUserExists = await User.find({_id:id});
 
-            if (checkIfUserExists){
+            if (checkIfUserExists[0]){
                 return res.status(httpCodes.OK).json({
                     data: checkIfUserExists,
                     message : "Success"

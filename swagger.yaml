@@ -1,0 +1,586 @@
+openapi: 3.0.0
+info:
+  title: Mongodb test project
+  version: '1.0'
+  description: Mongodb test application.
+servers:
+  - url: 'http://localhost:3031/api/v1'
+    description: Local Server
+paths:
+  /user/create:
+    post:
+      summary: Create User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+                x-examples:
+                  example-1:
+                    message: User created
+              examples:
+                example-1:
+                  value:
+                    message: User created
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 403
+                      errorMessage: Email already Exists
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 403
+                      errorMessage: Email already Exists
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 422
+                      errorMessage: Email is required
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 422
+                      errorMessage: Email is required
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User not created
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User not created
+      operationId: post-user-create
+      description: Create User
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: number
+                password:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+                - email
+                - phone
+                - password
+              x-examples:
+                example-1:
+                  name: Harsh
+                  email: harsh@kilowott.com
+                  phone: 5454555455
+                  password: '111111'
+            examples:
+              example-1:
+                value:
+                  name: Harsh
+                  email: harsh@kilowott.com
+                  phone: 5454555455
+                  password: '111111'
+          application/xml:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: number
+                password:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+                - email
+                - phone
+                - password
+              x-examples:
+                example-1:
+                  name: Harsh
+                  email: harsh@kilowott.com
+                  phone: 5454555455
+                  password: '111111'
+            examples:
+              example-1:
+                value: |-
+                  {
+                      "name": "Harsh",
+                      "email": "harsh@kilowott.com",
+                      "phone": 5454555455,
+                      "password": "111111"
+                      
+                  }
+        description: ''
+  '/user/:id':
+    get:
+      summary: Get user details
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - _id
+                        - name
+                        - email
+                        - phone
+                        - password
+                        - createdAt
+                        - updatedAt
+                        - __v
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 1
+                        name:
+                          type: string
+                          minLength: 1
+                        email:
+                          type: string
+                          minLength: 1
+                        phone:
+                          type: number
+                        password:
+                          type: string
+                          minLength: 1
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        __v:
+                          type: number
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - data
+                  - message
+                x-examples:
+                  example-1:
+                    data:
+                      - _id: 60de5b60af2b3fec7e9bb29c
+                        name: Harsh
+                        email: harsh11@kilowott.com
+                        phone: 5454555455
+                        password: $2a$10$SBcdHZQ2WRpjoQE9sG69b.pa46ETrQmOfi4blS9I7xtXc2a8WK.0W
+                        createdAt: '2021-07-02T00:18:40.406Z'
+                        updatedAt: '2021-07-02T00:18:40.406Z'
+                        __v: 0
+                    message: Success
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User not found
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User not found
+      operationId: 'get-user-:id'
+      description: Get user details
+    patch:
+      summary: Update user
+      operationId: 'patch-user-:id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+                x-examples:
+                  example-1:
+                    message: User data updated successfully
+              examples:
+                example-1:
+                  value:
+                    message: User data updated successfully
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 403
+                      errorMessage: Email Already Exists
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 403
+                      errorMessage: Email Already Exists
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User does not exists
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User not found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 422
+                      errorMessage: Name is required
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 422
+                      errorMessage: Name is reuired
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User data not updated
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User data not updated
+      description: Update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: number
+              required:
+                - name
+                - email
+                - phone
+              x-examples:
+                example-1:
+                  name: Harsh
+                  email: harsh@kilowott.com
+                  phone: 5454555455
+            examples:
+              example-1:
+                value:
+                  name: Harsh
+                  email: harsh@kilowott.com
+                  phone: 5454555455
+      tags:
+        - User
+    delete:
+      summary: Delete user
+      operationId: 'delete-user-:id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+                x-examples:
+                  example-1:
+                    message: User deleted
+              examples:
+                example-1:
+                  value:
+                    message: User deleted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User not found
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 404
+                      errorMessage: User not found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ErrorModel:
+                    type: object
+                    properties:
+                      errorCode:
+                        type: number
+                      errorMessage:
+                        type: string
+                        minLength: 1
+                    required:
+                      - errorCode
+                      - errorMessage
+                required:
+                  - ErrorModel
+                x-examples:
+                  example-1:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User data not updated
+              examples:
+                example-1:
+                  value:
+                    ErrorModel:
+                      errorCode: 500
+                      errorMessage: User not deleted
+      description: Delete user
+      tags:
+        - User
